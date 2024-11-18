@@ -12,7 +12,7 @@ int main () {
      cout<<str<<endl;
      
      char str1[] = "Safid Hasan";
-     cout<<str1,,endl;
+     cout<<str1<<endl;
 return 0;
 
 }
