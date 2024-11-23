@@ -8,7 +8,7 @@ int main() {
         cin >> years[i];
     }
     cout << "Leap years: ";
-    for (int i=0; i<5; i++) {
+    for (int i = 0; i < 5; i++) {
         int year = years[i];
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
         cout << year <<" ";
