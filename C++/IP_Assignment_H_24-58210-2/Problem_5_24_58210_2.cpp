@@ -11,7 +11,7 @@ int main() {
     for (int i=0; i<5; i++) {
         int year = years[i];
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-        cout << year << ", ";
+        cout << year <<" ";
         }
     }
     return 0;

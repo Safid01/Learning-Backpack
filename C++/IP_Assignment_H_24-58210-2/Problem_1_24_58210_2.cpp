@@ -17,6 +17,6 @@ int main() {
         totalCost += price * quantity;
     }
 
-    cout << "Total cost: BDT" << totalCost << endl;
+    cout << "Total cost: " << totalCost << " BDT" << endl;
     return 0;
 }
