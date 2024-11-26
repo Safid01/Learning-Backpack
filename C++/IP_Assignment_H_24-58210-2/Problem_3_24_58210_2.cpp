@@ -47,6 +47,5 @@ int main() {
         }
     }
     cout << "The second smallest number is: " << secondSmallest << endl;
-
     return 0;
 }

@@ -35,6 +35,5 @@ int main() {
 } else {
     cout << ch << " is not a character." << endl;
 }
-
     return 0;
 }
