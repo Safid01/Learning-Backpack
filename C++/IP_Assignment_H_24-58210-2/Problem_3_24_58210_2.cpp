@@ -4,13 +4,11 @@ using namespace std;
 int main() {
     int a, b, c, d;
 
-    // Input 4 numbers
     cout << "Enter four integers: ";
     cin >> a >> b >> c >> d;
 
     int smallest, secondSmallest;
 
-    // Find the smallest number
     if (a <= b && a <= c && a <= d) {
         smallest = a;
         if (b <= c && b <= d) {
@@ -48,8 +46,6 @@ int main() {
             secondSmallest = c;
         }
     }
-
-    // Output the second smallest number
     cout << "The second smallest number is: " << secondSmallest << endl;
 
     return 0;

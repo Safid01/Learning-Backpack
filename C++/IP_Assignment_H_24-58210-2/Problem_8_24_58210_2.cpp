@@ -2,14 +2,14 @@
 using namespace std;
 
 int main() {
-    int nums[] = {5, 8, 2, 1, 0};
-
-    for (int i = 0; i < 5; i++) {
-        for (int j = i; j < 5; j++) {
-            cout << nums[j] << " ";
+    int id[5] = {5, 8, 3, 1, 6};
+    int n = sizeof(id) / sizeof(id[0]);
+    for (int i = 0; i < n; i++) {
+        int limit = id[i];
+        for (int j = 1; j <= limit; j++) {
+            cout << j << " ";
         }
         cout << endl;
     }
-
     return 0;
 }
