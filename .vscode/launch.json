@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/safid/Downloads/Learning-Backpack/C++",
-      "program": "c:/Users/safid/Downloads/Learning-Backpack/C++/build/Debug/outDebug",
+      "cwd": "c:/Users/safid/Downloads",
+      "program": "c:/Users/safid/Downloads/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
