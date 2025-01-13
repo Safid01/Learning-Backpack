@@ -34,8 +34,8 @@ int main () {
    cp = num2;
    *cp = 11;
    for (int i = 0; i < 10; i++) {
-    cp++;
-    *cp = *(cp-1)+ 11;
+      cp++;
+     *cp = *(cp-1)+ 11;
    }
    for (int i = 0; i < 10; i++) {
         cout << num2[i] << " ";

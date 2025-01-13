@@ -5,7 +5,7 @@ int main () {
     int arr1 [3][3] = {{2, 1, 3}, {9, 2, 11}, {4, 4, 6}};
     int arr2 [3][3] = {{6, 2, 4}, {3, 2, 1}, {5, 1, 7}};
     
-    cout << "1nd Array" << endl;
+    cout << "1st Array" << endl;
     for (int row = 0; row < 3; row++) {
         for (int column = 0; column < 3; column++) {
             cout << arr1[row][column] << "\t";
@@ -85,12 +85,12 @@ cout << "Total sum of elements in the 2nd Array: " << totalSum2 << endl;
     cout << "Left diagonal sum of Array 1 :" << leftsum << endl;
     
     int rightsum = 0;
-    int column = 3-1;
-    int row = 0;
-    while (column >= 0 || row < 3) {
-        rightsum += arr1 [row] [column];
-        column--;
-        row++;
+    for (int row = 0; row < 3; row++) {
+        for (int column = 0; column < 3; column++) {
+            if (row + column == 2) {
+                rightsum += arr1 [row] [column];
+            }
+        }
     }
     cout << "Right diagonal sum of Array 1 :" << rightsum << endl;
     return 0;

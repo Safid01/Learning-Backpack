@@ -12,7 +12,7 @@ int main () {
         cout << endl;
     }
 
-    cout << "2nd Array" << endl;
+    cout << "The Matrix:" << endl;
     for (int row = 0; row < 3; row++) {
         for (int column = 0; column < 3; column++) {
             cout << arr1[row][column] << "\t";
