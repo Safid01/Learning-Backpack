@@ -4,7 +4,8 @@ struct student{
     int id;
     string name;
     float cgpa;
- 
+    
+    //Member function
     void show(){
         cout<<"Name: "<<name<<endl;
         cout<<"id: "<<id<<endl;

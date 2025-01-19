@@ -7,7 +7,7 @@ int main () {
     cout << endl;
     for (int i = 0; i < 3; i++) {
         for (int k = 0; k < 3; k++) {
-            cout << nums [i] [k];
+            cout << nums [i] [k] << "\t";
         }
         cout << endl;
     }
