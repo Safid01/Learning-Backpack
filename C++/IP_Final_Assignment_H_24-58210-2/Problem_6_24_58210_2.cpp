@@ -1,23 +1,17 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
-
 struct Point {
-    int x, y;
+    double x, y;
 
-    int distance(Point p) {
-        int dx = (p.x - x) * (p.x - x);
-        int dy = (p.y - y) * (p.y - y);
-        int dist = 0;
-        for (int i = 1; i <= dx + dy; i++) {
-            if (i * i == dx + dy) {
-                dist = i;
-                break;
-            }
-        }
-        return dist;
+    double distance(const Point& other) {
+        int dx = x - other.x;
+        int dy = y - other.y;
+        return sqrt(dx * dx + dy * dy);
     }
 
     bool isCollinear(Point p1, Point p2) {
+        // (y2 - y1) * (x3 - x1) == (y3 - y1) * (x2 - x1)
         return (p2.y - p1.y) * (p1.x - x) == (p1.y - y) * (p2.x - p1.x);
     }
 };

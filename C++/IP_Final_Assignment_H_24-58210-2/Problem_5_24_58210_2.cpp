@@ -16,7 +16,7 @@ int main() {
     cout << "Enter the number of elements: ";
     cin >> n;
 
-    int arr[100]; // Fixed size array
+    int arr[100];
     cout << "Enter the elements: ";
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
