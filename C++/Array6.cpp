@@ -11,9 +11,6 @@ int main () {
         if (arr[i] % 2 != 0) {
         cout<<arr[i]<<" ";
     }
-    
-    }
-    
+  } 
 return 0;
-
 }
