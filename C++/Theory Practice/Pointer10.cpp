@@ -4,7 +4,7 @@ int main()
 {
 int a = 10, *pa, ra;
 pa = &a;
-ra = a;
+ra = *pa;
 cout << "a=" << ra;
 return 0;
 }

@@ -40,20 +40,6 @@ struct Student
             return 0;
     }
 }; //end of structure
-
-//user define function
-/*void print_st(struct Student st[], int n)
-{
-    for(int i=0; i<n; i++)
-    {
-        cout<<st[i].name<<"'s record:"<<endl;
-        cout<<"Age: "<<st[i].age<<endl;
-        cout<<"ID: "<<st[i].stdId<<endl;
-        cout<<"CGPA: "<<st[i].cgpa<<endl;
-        cout<<"Credit completed: "<<st[i].credit<<endl<<endl;
-    }
-}
-*/
 int main()
 {
     int n;
@@ -65,13 +51,11 @@ int main()
     {
         s[i].intput_st();
     }
-
      cout<<"\nDisplay student info:"<<endl;
      for(int i=0; i<n; i++)
      {
          s[i].print_st();
      }
-
       // print student name and id and credit with credit > 30 using member funtio
        cout<<"student completed more than 30 credits"<<endl;
        for(int i=0; i<n; i++)

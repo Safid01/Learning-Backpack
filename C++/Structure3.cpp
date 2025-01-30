@@ -25,18 +25,15 @@ int main () {
         cout << "Enter cgpa of the student "<< i+1 <<" : ";
         cin >> students[i].cgpa;
     }
- 
     for (int i = 0; i < n; i++){
         cout << "Showing info of the student "<< i+1 << endl;
         students[i].show_info();
         cout << endl;
     }
- 
     for (int i = 0; i < 3; i++){
         if(students[i].cgpa >= 3.8){
             cout << students[i].name <<" (Id: " << students[i].id << ") is eligible for scholarship" << endl;
         }
     }
     return 0;
- 
 }

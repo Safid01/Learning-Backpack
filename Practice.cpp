@@ -1,14 +1,16 @@
 #include <iostream>
 using namespace std;
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
-int main()
-{
-float x = 5.999;
-float* y, *z;
-y = &x;
-z = y;
-cout << x << ", " << *(&x) << ", " << *y << ", " << *z << "\n";
-return 0;
+
+int Factorial(int n) {
+    if (n == 0) return 0; // As per problem example
+    int fact = 1;
+    for (int i = 1; i <= n; ++i) fact = fact * i;
+    return fact;
+}
+
+int main() {
+    int num;
+    cin >> num;
+    cout << Factorial(num);
+    return 0;
 }
