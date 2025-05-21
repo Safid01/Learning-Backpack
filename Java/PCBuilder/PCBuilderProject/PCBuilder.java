@@ -5,22 +5,7 @@ import java.util.*;
 import java.text.DecimalFormat;
 import java.io.*;
 
-class Component {
-    private String name;
-    private double price;
-
-    public Component(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public String getName() { return name; }
-    public double getPrice() { return price; }
-    @Override
-    public String toString() { return name + " (" + price + "৳)"; }
-}
-
-public class PCBuilder extends JFrame {
+public class PCBuilder extends BaseFrame {
     private Map<String, JComboBox<Component>> componentComboBoxes = new HashMap<>();
     private Map<String, ArrayList<Component>> componentOptions = new HashMap<>();
     private JLabel totalLabel;
@@ -32,7 +17,7 @@ public class PCBuilder extends JFrame {
     );
 
     public PCBuilder() {
-        setTitle("PC Builder");
+        super("PC Builder - TechLand");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setSize(800, 700);
@@ -40,7 +25,7 @@ public class PCBuilder extends JFrame {
         // Header Panel with Buttons
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Color.WHITE);
-        JLabel logo = new JLabel("PC BUILDER", SwingConstants.LEFT);
+        JLabel logo = new JLabel("TECH LAND", SwingConstants.LEFT);
         logo.setFont(new Font("Arial", Font.BOLD, 20));
         header.add(logo, BorderLayout.WEST);
 
@@ -63,7 +48,7 @@ public class PCBuilder extends JFrame {
         // Title and Total Panel
         JPanel titlePanel = new JPanel(new FlowLayout());
         titlePanel.setBackground(Color.WHITE);
-        JLabel title = new JLabel("Build your own PC");
+        JLabel title = new JLabel("PC Builder - Build your own PC - TechLand");
         title.setFont(new Font("Arial", Font.BOLD, 18));
         totalLabel = new JLabel("Total Amount: 0৳");
         totalLabel.setForeground(Color.ORANGE);
@@ -85,7 +70,7 @@ public class PCBuilder extends JFrame {
             "Mouse", "Keyboard", "Headphone"
         }));
         JScrollPane scrollPane = new JScrollPane(content);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Faster scrolling
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
@@ -115,7 +100,7 @@ public class PCBuilder extends JFrame {
 
     private JPanel createComponentSection(String title, String[] components) {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(240, 240, 240)); // Light gray background
+        panel.setBackground(new Color(240, 240, 240));
         panel.setBorder(BorderFactory.createTitledBorder(title));
         JPanel grid = new JPanel(new GridLayout(components.length, 1));
 
@@ -126,7 +111,7 @@ public class PCBuilder extends JFrame {
             row.add(label);
             ArrayList<Component> options = componentOptions.getOrDefault(comp, new ArrayList<>());
             JComboBox<Component> comboBox = new JComboBox<>(options.toArray(new Component[0]));
-            comboBox.setPreferredSize(new Dimension(400, 25)); // Wide dropdowns
+            comboBox.setPreferredSize(new Dimension(400, 25));
             comboBox.addActionListener(e -> updateTotal());
             row.add(comboBox);
             grid.add(row);
@@ -139,7 +124,6 @@ public class PCBuilder extends JFrame {
     private void loadComponents() {
         Component select = new Component("Select", 0);
 
-        // Core Components
         componentOptions.put("Processor*", new ArrayList<>(Arrays.asList(select,
             new Component("Intel i7-12700K", 25000),
             new Component("AMD Ryzen 5 5600X", 20000),
@@ -174,7 +158,6 @@ public class PCBuilder extends JFrame {
             new Component("NZXT H510", 6000),
             new Component("Fractal Design Meshify C", 8000))));
 
-        // Peripherals & Others
         componentOptions.put("Monitor", new ArrayList<>(Arrays.asList(select,
             new Component("Dell UltraSharp 24\"", 15000),
             new Component("ASUS TUF Gaming 27\"", 20000))));
@@ -185,7 +168,6 @@ public class PCBuilder extends JFrame {
             new Component("APC Back-UPS 600VA", 5000),
             new Component("CyberPower CP1500 AVR", 10000))));
 
-        // Accessories
         componentOptions.put("Mouse", new ArrayList<>(Arrays.asList(select,
             new Component("Logitech G502 Hero", 4000),
             new Component("Razer DeathAdder V2", 3000))));
@@ -196,7 +178,6 @@ public class PCBuilder extends JFrame {
             new Component("Sony WH-1000XM4", 25000),
             new Component("Bose QuietComfort 35 II", 20000))));
 
-        // Update combo box models
         for (String key : componentComboBoxes.keySet()) {
             JComboBox<Component> comboBox = componentComboBoxes.get(key);
             comboBox.setModel(new DefaultComboBoxModel<>(componentOptions.get(key).toArray(new Component[0])));
@@ -244,71 +225,5 @@ public class PCBuilder extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(PCBuilder::new);
-    }
-}
-
-class SavedBuildsFrame extends JFrame {
-    public SavedBuildsFrame() {
-        setTitle("Saved Builds");
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        ArrayList<String> builds = readBuilds();
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
-        if (builds.isEmpty()) {
-            mainPanel.add(new JLabel("No saved builds."));
-        } else {
-            for (String build : builds) {
-                JPanel buildPanel = new JPanel(new BorderLayout());
-                JTextArea buildText = new JTextArea(build);
-                buildText.setEditable(false);
-                buildPanel.add(buildText, BorderLayout.CENTER);
-                JButton deleteButton = new JButton("Delete");
-                deleteButton.addActionListener(e -> deleteBuild(build));
-                buildPanel.add(deleteButton, BorderLayout.EAST);
-                mainPanel.add(buildPanel);
-            }
-        }
-        add(new JScrollPane(mainPanel));
-        setVisible(true);
-    }
-
-    private ArrayList<String> readBuilds() {
-        ArrayList<String> builds = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("build.txt"))) {
-            StringBuilder build = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.equals("-----")) {
-                    builds.add(build.toString());
-                    build = new StringBuilder();
-                } else {
-                    build.append(line).append("\n");
-                }
-            }
-            if (build.length() > 0) {
-                builds.add(build.toString());
-            }
-        } catch (IOException e) {
-            // Return empty list if file not found
-        }
-        return builds;
-    }
-
-    private void deleteBuild(String buildToDelete) {
-        ArrayList<String> builds = readBuilds();
-        builds.remove(buildToDelete);
-        try (PrintWriter writer = new PrintWriter("build.txt")) {
-            for (String build : builds) {
-                writer.print(build);
-                writer.println("-----");
-            }
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Error deleting build!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        dispose();
-        new SavedBuildsFrame();
     }
 }
