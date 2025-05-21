@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Start",
+      "request": "launch",
+      "mainClass": "Start",
+      "projectName": "Learning-Backpack-1_26c82974"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
