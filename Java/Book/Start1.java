@@ -1,4 +1,4 @@
-public class Start {
+public class Start1 {
     public static void main(String[] args) {
         Book b1 = new Book(1001, "The Great Gatsby", "F. Scott Fitzgerald");
         Book b2 = new Book(1002, "1984", "George Orwell");
