@@ -70,7 +70,7 @@ public class PCBuilder extends BaseFrame {
             "Mouse", "Keyboard", "Headphone"
         }));
         JScrollPane scrollPane = new JScrollPane(content);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Faster scrolling
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
@@ -100,7 +100,7 @@ public class PCBuilder extends BaseFrame {
 
     private JPanel createComponentSection(String title, String[] components) {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(240, 240, 240));
+        panel.setBackground(new Color(240, 240, 240)); // Light gray background
         panel.setBorder(BorderFactory.createTitledBorder(title));
         JPanel grid = new JPanel(new GridLayout(components.length, 1));
 
@@ -111,7 +111,7 @@ public class PCBuilder extends BaseFrame {
             row.add(label);
             ArrayList<Component> options = componentOptions.getOrDefault(comp, new ArrayList<>());
             JComboBox<Component> comboBox = new JComboBox<>(options.toArray(new Component[0]));
-            comboBox.setPreferredSize(new Dimension(400, 25));
+            comboBox.setPreferredSize(new Dimension(400, 25)); // Wide dropdowns
             comboBox.addActionListener(e -> updateTotal());
             row.add(comboBox);
             grid.add(row);
@@ -124,6 +124,7 @@ public class PCBuilder extends BaseFrame {
     private void loadComponents() {
         Component select = new Component("Select", 0);
 
+        // Core Components
         componentOptions.put("Processor*", new ArrayList<>(Arrays.asList(select,
             new Component("Intel i7-12700K", 25000),
             new Component("AMD Ryzen 5 5600X", 20000),
@@ -158,6 +159,7 @@ public class PCBuilder extends BaseFrame {
             new Component("NZXT H510", 6000),
             new Component("Fractal Design Meshify C", 8000))));
 
+        // Peripherals & Others
         componentOptions.put("Monitor", new ArrayList<>(Arrays.asList(select,
             new Component("Dell UltraSharp 24\"", 15000),
             new Component("ASUS TUF Gaming 27\"", 20000))));
@@ -168,6 +170,7 @@ public class PCBuilder extends BaseFrame {
             new Component("APC Back-UPS 600VA", 5000),
             new Component("CyberPower CP1500 AVR", 10000))));
 
+        // Accessories
         componentOptions.put("Mouse", new ArrayList<>(Arrays.asList(select,
             new Component("Logitech G502 Hero", 4000),
             new Component("Razer DeathAdder V2", 3000))));
@@ -178,6 +181,7 @@ public class PCBuilder extends BaseFrame {
             new Component("Sony WH-1000XM4", 25000),
             new Component("Bose QuietComfort 35 II", 20000))));
 
+        // Update combo box models
         for (String key : componentComboBoxes.keySet()) {
             JComboBox<Component> comboBox = componentComboBoxes.get(key);
             comboBox.setModel(new DefaultComboBoxModel<>(componentOptions.get(key).toArray(new Component[0])));
@@ -221,9 +225,5 @@ public class PCBuilder extends BaseFrame {
             comboBox.setSelectedIndex(0);
         }
         updateTotal();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(PCBuilder::new);
     }
 }
