@@ -11,7 +11,7 @@ public class PCBuilder extends BaseFrame {
     private Map<String, ArrayList<Component>> componentOptions;
 
     public PCBuilder() {
-        super("PC Builder - TechLand");
+        super("PC Builder");
         componentComboBoxes = new HashMap<>();
         componentOptions = new HashMap<>();
         loadComponents();
@@ -22,7 +22,7 @@ public class PCBuilder extends BaseFrame {
 
         JPanel titlePanel = new JPanel(new FlowLayout());
         titlePanel.setBackground(Color.WHITE);
-        JLabel title = new JLabel("PC Builder - Build your own PC - TechLand");
+        JLabel title = new JLabel("Build your own PC");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
         title.setForeground(Color.BLACK);
         totalLabel = new JLabel("Total Amount: 0৳");
