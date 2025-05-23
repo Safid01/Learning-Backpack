@@ -1,222 +1,244 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
-import java.text.DecimalFormat;
 import java.io.*;
 
 public class PCBuilder extends BaseFrame {
-    private Map<String, JComboBox<Component>> componentComboBoxes = new HashMap<>();
-    private Map<String, ArrayList<Component>> componentOptions = new HashMap<>();
+
     private JLabel totalLabel;
-    private double totalAmount = 0.0;
-    private DecimalFormat df = new DecimalFormat("#,##0.00");
-    private java.util.List<String> componentOrder = Arrays.asList(
-        "Processor*", "Motherboard*", "Graphics Card", "CPU Cooler", "RAM-1*", "RAM-2",
-        "SSD", "HDD", "Power Supply", "Casing", "Monitor", "Case fan", "UPS", "Mouse", "Keyboard", "Headphone"
-    );
+    private Map<String, JComboBox<Component>> componentComboBoxes;
+    private Map<String, ArrayList<Component>> componentOptions;
 
     public PCBuilder() {
         super("PC Builder - TechLand");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setSize(800, 700);
+        componentComboBoxes = new HashMap<>();
+        componentOptions = new HashMap<>();
+        loadComponents();
 
-        // Header Panel with Buttons
-        JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(Color.WHITE);
-        JLabel logo = new JLabel("TECH LAND", SwingConstants.LEFT);
-        logo.setFont(new Font("Arial", Font.BOLD, 20));
-        header.add(logo, BorderLayout.WEST);
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(Color.WHITE);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton addToCart = new JButton("Add to Cart");
-        customizeButton(addToCart);
-        JButton loadBuild = new JButton("Load Build");
-        customizeButton(loadBuild);
-        JButton clearAll = new JButton("Clear All");
-        customizeButton(clearAll);
-        buttonPanel.add(addToCart);
-        buttonPanel.add(loadBuild);
-        buttonPanel.add(clearAll);
-        header.add(buttonPanel, BorderLayout.EAST);
-        add(header, BorderLayout.NORTH);
-
-        // Center Panel with Title, Total, and Components
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        
-        // Title and Total Panel
         JPanel titlePanel = new JPanel(new FlowLayout());
         titlePanel.setBackground(Color.WHITE);
         JLabel title = new JLabel("PC Builder - Build your own PC - TechLand");
-        title.setFont(new Font("Arial", Font.BOLD, 18));
+        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setForeground(Color.BLACK);
         totalLabel = new JLabel("Total Amount: 0৳");
         totalLabel.setForeground(Color.ORANGE);
-        totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        totalLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        JPanel totalPanel = new JPanel();
+        totalPanel.setBackground(Color.WHITE);
+        totalPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        totalPanel.add(totalLabel);
         titlePanel.add(title);
-        titlePanel.add(totalLabel);
-        centerPanel.add(titlePanel, BorderLayout.NORTH);
+        titlePanel.add(totalPanel);
 
-        // Component Sections
-        JPanel content = new JPanel(new GridLayout(3, 1));
-        content.add(createComponentSection("CORE COMPONENTS", new String[]{
-            "Processor*", "Motherboard*", "Graphics Card", "CPU Cooler", "RAM-1*", "RAM-2",
-            "SSD", "HDD", "Power Supply", "Casing"
-        }));
-        content.add(createComponentSection("PERIPHERALS & OTHERS", new String[]{
-            "Monitor", "Case fan", "UPS"
-        }));
-        content.add(createComponentSection("ACCESSORIES", new String[]{
-            "Mouse", "Keyboard", "Headphone"
-        }));
-        JScrollPane scrollPane = new JScrollPane(content);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Faster scrolling
-        centerPanel.add(scrollPane, BorderLayout.CENTER);
-        add(centerPanel, BorderLayout.CENTER);
+        String[] coreComponents = {"Processor*", "Motherboard*", "CPU Cooler*", "RAM-1*", "RAM-2", "Graphics Card", "Storage*", "Power Supply*", "Case*"};
+        String[] peripherals = {"Monitor", "Keyboard", "Mouse"};
+        String[] accessories = {"Cooling Fan", "Cables"};
 
-        // Load Components
-        loadComponents();
+        JPanel coreComponentsPanel = createComponentSection("Core Components", coreComponents);
+        JPanel peripheralsPanel = createComponentSection("Peripherals", peripherals);
+        JPanel accessoriesPanel = createComponentSection("Accessories", accessories);
 
-        // Action Listeners
-        addToCart.addActionListener(e -> {
-            if (saveBuild()) {
-                JOptionPane.showMessageDialog(this, "Build saved and added to cart!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error saving build!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        loadBuild.addActionListener(e -> new SavedBuildsFrame());
+        JScrollPane coreScrollPane = new JScrollPane(coreComponentsPanel);
+        coreScrollPane.setBorder(BorderFactory.createTitledBorder("Core Components"));
+        coreScrollPane.getViewport().setBackground(Color.WHITE);
+        JScrollPane peripheralsScrollPane = new JScrollPane(peripheralsPanel);
+        peripheralsScrollPane.setBorder(BorderFactory.createTitledBorder("Peripherals"));
+        peripheralsScrollPane.getViewport().setBackground(Color.WHITE);
+        JScrollPane accessoriesScrollPane = new JScrollPane(accessoriesPanel);
+        accessoriesScrollPane.setBorder(BorderFactory.createTitledBorder("Accessories"));
+        accessoriesScrollPane.getViewport().setBackground(Color.WHITE);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Core Components", coreScrollPane);
+        tabbedPane.addTab("Peripherals", peripheralsScrollPane);
+        tabbedPane.addTab("Accessories", accessoriesScrollPane);
+        tabbedPane.setBackground(Color.WHITE);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        buttonPanel.setBackground(Color.WHITE);
+
+        JButton addToCart = new JButton("Add to Cart");
+        JButton loadBuild = new JButton("Load Build");
+        JButton clearAll = new JButton("Clear All");
+
+        customizeButton(addToCart);
+        customizeButton(loadBuild);
+        customizeButton(clearAll);
+
+        addToCart.setIcon(loadIcon("add_to_cart"));
+        addToCart.setBackground(new Color(0, 153, 0));
+        loadBuild.setIcon(loadIcon("load_build"));
+        loadBuild.setBackground(new Color(0, 102, 204));
+        clearAll.setIcon(loadIcon("clear_all"));
+        clearAll.setBackground(new Color(204, 0, 0));
+
+        buttonPanel.add(addToCart);
+        buttonPanel.add(loadBuild);
+        buttonPanel.add(clearAll);
+
+        addToCart.addActionListener(e -> addToCart());
+        loadBuild.addActionListener(e -> loadBuild());
         clearAll.addActionListener(e -> clearAll());
 
+        mainPanel.add(titlePanel, BorderLayout.NORTH);
+        mainPanel.add(tabbedPane, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+        setSize(600, 700);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private void customizeButton(JButton button) {
-        button.setBackground(Color.BLUE);
-        button.setForeground(Color.WHITE);
-        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-    }
-
     private JPanel createComponentSection(String title, String[] components) {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(240, 240, 240)); // Light gray background
-        panel.setBorder(BorderFactory.createTitledBorder(title));
-        JPanel grid = new JPanel(new GridLayout(components.length, 1));
+        JPanel grid = new JPanel();
+        grid.setLayout(new BoxLayout(grid, BoxLayout.Y_AXIS));
+        grid.setBackground(Color.WHITE);
 
         for (String comp : components) {
             JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            JLabel label = new JLabel(comp);
+            row.setBackground(Color.WHITE);
+
+            JLabel label = new JLabel(comp.replace("*", "") + ":");
+            label.setPreferredSize(new Dimension(100, 30));
+            label.setForeground(Color.BLACK);
             label.setFont(new Font("Arial", Font.PLAIN, 14));
-            row.add(label);
-            ArrayList<Component> options = componentOptions.getOrDefault(comp, new ArrayList<>());
+            ArrayList<Component> options = componentOptions.get(comp);
             JComboBox<Component> comboBox = new JComboBox<>(options.toArray(new Component[0]));
-            comboBox.setPreferredSize(new Dimension(400, 25)); // Wide dropdowns
+            comboBox.setRenderer(new ComponentRenderer(comp));
+            comboBox.setPreferredSize(new Dimension(400, 30));
+            comboBox.setBackground(Color.WHITE);
+            comboBox.setForeground(Color.BLACK);
+            comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+            componentComboBoxes.put(comp, comboBox);
+
             comboBox.addActionListener(e -> updateTotal());
+
+            row.add(label);
             row.add(comboBox);
             grid.add(row);
-            componentComboBoxes.put(comp, comboBox);
         }
-        panel.add(grid, BorderLayout.CENTER);
-        return panel;
+        return grid;
     }
 
     private void loadComponents() {
-        Component select = new Component("Select", 0);
-
-        // Core Components
-        componentOptions.put("Processor*", new ArrayList<>(Arrays.asList(select,
-            new Component("Intel i7-12700K", 25000),
-            new Component("AMD Ryzen 5 5600X", 20000),
-            new Component("Intel i5-12400F", 18000))));
-        componentOptions.put("Motherboard*", new ArrayList<>(Arrays.asList(select,
-            new Component("ASUS ROG Strix Z690", 15000),
-            new Component("Gigabyte B550 Aorus", 12000),
-            new Component("MSI MAG B660", 10000))));
-        componentOptions.put("Graphics Card", new ArrayList<>(Arrays.asList(select,
-            new Component("NVIDIA RTX 3060", 35000),
-            new Component("AMD RX 6600 XT", 30000),
-            new Component("NVIDIA GTX 1660 Super", 25000))));
-        componentOptions.put("CPU Cooler", new ArrayList<>(Arrays.asList(select,
-            new Component("Cooler Master Hyper 212", 3000),
-            new Component("Noctua NH-D15", 7000))));
-        componentOptions.put("RAM-1*", new ArrayList<>(Arrays.asList(select,
-            new Component("Corsair Vengeance 8GB DDR4", 4000),
-            new Component("G.Skill Ripjaws 16GB DDR4", 8000))));
-        componentOptions.put("RAM-2", new ArrayList<>(Arrays.asList(select,
-            new Component("Corsair Vengeance 8GB DDR4", 4000),
-            new Component("G.Skill Ripjaws 16GB DDR4", 8000))));
-        componentOptions.put("SSD", new ArrayList<>(Arrays.asList(select,
-            new Component("Samsung 970 EVO 500GB", 8000),
-            new Component("Crucial MX500 1TB", 10000))));
-        componentOptions.put("HDD", new ArrayList<>(Arrays.asList(select,
-            new Component("Seagate Barracuda 1TB", 4000),
-            new Component("Western Digital Blue 2TB", 6000))));
-        componentOptions.put("Power Supply", new ArrayList<>(Arrays.asList(select,
-            new Component("EVGA 600W 80+ Bronze", 5000),
-            new Component("Corsair RM750x 80+ Gold", 9000))));
-        componentOptions.put("Casing", new ArrayList<>(Arrays.asList(select,
-            new Component("NZXT H510", 6000),
-            new Component("Fractal Design Meshify C", 8000))));
-
-        // Peripherals & Others
-        componentOptions.put("Monitor", new ArrayList<>(Arrays.asList(select,
-            new Component("Dell UltraSharp 24\"", 15000),
-            new Component("ASUS TUF Gaming 27\"", 20000))));
-        componentOptions.put("Case fan", new ArrayList<>(Arrays.asList(select,
-            new Component("Noctua NF-F12", 1500),
-            new Component("Corsair LL120 RGB", 2000))));
-        componentOptions.put("UPS", new ArrayList<>(Arrays.asList(select,
-            new Component("APC Back-UPS 600VA", 5000),
-            new Component("CyberPower CP1500 AVR", 10000))));
-
-        // Accessories
-        componentOptions.put("Mouse", new ArrayList<>(Arrays.asList(select,
-            new Component("Logitech G502 Hero", 4000),
-            new Component("Razer DeathAdder V2", 3000))));
-        componentOptions.put("Keyboard", new ArrayList<>(Arrays.asList(select,
-            new Component("Corsair K70 RGB", 8000),
-            new Component("Logitech G Pro X", 6000))));
-        componentOptions.put("Headphone", new ArrayList<>(Arrays.asList(select,
-            new Component("Sony WH-1000XM4", 25000),
-            new Component("Bose QuietComfort 35 II", 20000))));
-
-        // Update combo box models
-        for (String key : componentComboBoxes.keySet()) {
-            JComboBox<Component> comboBox = componentComboBoxes.get(key);
-            comboBox.setModel(new DefaultComboBoxModel<>(componentOptions.get(key).toArray(new Component[0])));
-        }
+        componentOptions.put("Processor*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Intel i9-12900K", 55000),
+            new Component("AMD Ryzen 9 5950X", 50000)
+        )));
+        componentOptions.put("Motherboard*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("ASUS ROG Strix Z690", 25000),
+            new Component("MSI MPG B550 Gaming Edge", 15000)
+        )));
+        componentOptions.put("CPU Cooler*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Noctua NH-D15", 8000),
+            new Component("Corsair H100i", 10000)
+        )));
+        componentOptions.put("RAM-1*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Corsair Vengeance 16GB", 8000),
+            new Component("G.Skill Ripjaws 32GB", 12000)
+        )));
+        componentOptions.put("RAM-2", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Corsair Vengeance 16GB", 8000),
+            new Component("G.Skill Ripjaws 32GB", 12000)
+        )));
+        componentOptions.put("Graphics Card", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("NVIDIA RTX 3080", 70000),
+            new Component("AMD Radeon RX 6800 XT", 65000)
+        )));
+        componentOptions.put("Storage*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Samsung 970 EVO 1TB", 15000),
+            new Component("Western Digital 2TB HDD", 5000)
+        )));
+        componentOptions.put("Power Supply*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Corsair RM750", 10000),
+            new Component("EVGA SuperNOVA 850", 12000)
+        )));
+        componentOptions.put("Case*", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("NZXT H510", 7000),
+            new Component("Cooler Master MasterBox Q300L", 5000)
+        )));
+        componentOptions.put("Monitor", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Dell UltraSharp 27\"", 25000),
+            new Component("ASUS TUF Gaming 24\"", 18000)
+        )));
+        componentOptions.put("Keyboard", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Logitech G Pro", 8000),
+            new Component("Razer BlackWidow", 10000)
+        )));
+        componentOptions.put("Mouse", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Logitech G502", 5000),
+            new Component("Razer DeathAdder", 4000)
+        )));
+        componentOptions.put("Cooling Fan", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("Noctua NH-D15", 8000),
+            new Component("Corsair LL120", 3000)
+        )));
+        componentOptions.put("Cables", new ArrayList<>(Arrays.asList(
+            new Component("Select", 0),
+            new Component("SATA Cable Pack", 500),
+            new Component("HDMI Cable", 1000)
+        )));
     }
 
     private void updateTotal() {
-        totalAmount = 0.0;
+        int total = 0;
         for (JComboBox<Component> comboBox : componentComboBoxes.values()) {
             Component selected = (Component) comboBox.getSelectedItem();
-            if (selected != null && !selected.getName().equals("Select")) {
-                totalAmount += selected.getPrice();
-            }
+            if (selected != null) total += selected.getPrice();
         }
-        totalLabel.setText("Total Amount: " + df.format(totalAmount) + "৳");
+        totalLabel.setText("Total Amount: " + total + "৳");
     }
 
-    private boolean saveBuild() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("build.txt", true))) {
-            for (String comp : componentOrder) {
-                JComboBox<Component> comboBox = componentComboBoxes.get(comp);
-                if (comboBox != null) {
-                    Component selected = (Component) comboBox.getSelectedItem();
-                    if (selected != null && !selected.getName().equals("Select")) {
-                        writer.println(comp + ": " + selected.getName());
-                    } else {
-                        writer.println(comp + ": Not selected");
-                    }
+    private void addToCart() {
+        StringBuilder build = new StringBuilder();
+        boolean allRequiredSelected = true;
+
+        for (String key : componentComboBoxes.keySet()) {
+            Component selected = (Component) componentComboBoxes.get(key).getSelectedItem();
+            if (selected != null) {
+                if (key.contains("*") && selected.getName().equals("Select")) {
+                    allRequiredSelected = false;
+                    break;
                 }
+                build.append(key.replace("*", "")).append(": ").append(selected).append("\n");
             }
-            writer.println("Total Amount: " + totalAmount + "৳");
-            writer.println("-----");
-            return true;
-        } catch (IOException e) {
-            return false;
         }
+
+        if (!allRequiredSelected) {
+            JOptionPane.showMessageDialog(this, "Please select all required components marked with *", "Incomplete Build", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("SavedBuilds.txt", true))) {
+            bw.write(build.toString());
+            bw.newLine();
+            JOptionPane.showMessageDialog(this, "Build added to cart successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadBuild() {
+        new SavedBuildsFrame(this);
     }
 
     private void clearAll() {
@@ -224,5 +246,70 @@ public class PCBuilder extends BaseFrame {
             comboBox.setSelectedIndex(0);
         }
         updateTotal();
+    }
+
+    public void loadBuild(String build) {
+        String[] lines = build.split("\n");
+        for (String line : lines) {
+            String[] parts = line.split(": ", 2);
+            if (parts.length == 2) {
+                String category = parts[0];
+                String componentName = parts[1].substring(0, parts[1].indexOf(" ("));
+                JComboBox<Component> comboBox = componentComboBoxes.get(category + "*");
+                if (comboBox == null) comboBox = componentComboBoxes.get(category);
+                if (comboBox != null) {
+                    for (int i = 0; i < comboBox.getItemCount(); i++) {
+                        Component item = comboBox.getItemAt(i);
+                        if (item.getName().equals(componentName)) {
+                            comboBox.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        updateTotal();
+    }
+
+    private void customizeButton(JButton button) {
+        button.setBackground(new Color(0, 120, 215));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setFont(new Font("Verdana", Font.BOLD, 14));
+        button.setPreferredSize(new Dimension(120, 40));
+    }
+
+    private ImageIcon loadIcon(String name) {
+        return new ImageIcon("icons/" + name + ".png");
+    }
+
+    private class ComponentRenderer extends DefaultListCellRenderer {
+        private String category;
+
+        public ComponentRenderer(String category) {
+            this.category = category;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value instanceof Component) {
+                Component comp = (Component) value;
+                if (comp.getName().equals("Select")) {
+                    setIcon(null);
+                } else {
+                    String iconName = category.replace("*", "").replace(" ", "_").toLowerCase();
+                    setIcon(loadIcon(iconName));
+                }
+            }
+            setFont(new Font("Tahoma", Font.PLAIN, 12));
+            setBackground(isSelected ? new Color(0, 120, 215) : Color.WHITE);
+            setForeground(Color.BLACK);
+            return this;
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(PCBuilder::new);
     }
 }
