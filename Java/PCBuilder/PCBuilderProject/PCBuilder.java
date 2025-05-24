@@ -12,6 +12,7 @@ public class PCBuilder extends BaseFrame {
 
     public PCBuilder() {
         super("PC Builder");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         componentComboBoxes = new HashMap<>();
         componentOptions = new HashMap<>();
         loadComponents();
