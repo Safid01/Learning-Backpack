@@ -312,7 +312,6 @@ public class PCBuilder extends BaseFrame {
             return this;
         }
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(PCBuilder::new);
     }
