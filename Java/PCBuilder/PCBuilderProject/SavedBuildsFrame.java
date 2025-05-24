@@ -9,7 +9,8 @@ public class SavedBuildsFrame extends BaseFrame {
     public SavedBuildsFrame(PCBuilder pcBuilder) {
         super("Saved Builds");
         this.pcBuilder = pcBuilder;
-        setSize(400, 300);
+        setSize(500, 600);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ArrayList<String> builds = readBuilds();
@@ -24,9 +25,6 @@ public class SavedBuildsFrame extends BaseFrame {
                 JTextArea buildText = new JTextArea(build);
                 buildText.setEditable(false);
                 buildPanel.add(buildText, BorderLayout.CENTER);
-                JButton loadButton = new JButton("Load");
-                loadButton.addActionListener(e -> pcBuilder.loadBuild(build));
-                buildPanel.add(loadButton, BorderLayout.WEST);
                 JButton deleteButton = new JButton("Delete");
                 deleteButton.addActionListener(e -> deleteBuild(build));
                 buildPanel.add(deleteButton, BorderLayout.EAST);
@@ -43,7 +41,7 @@ public class SavedBuildsFrame extends BaseFrame {
 
     private ArrayList<String> readBuilds() {
         ArrayList<String> builds = new ArrayList<>();
-        File file = new File("build.txt");
+        File file = new File("SavedBuilds.txt");
         if (!file.exists()) {
             return builds; // Return empty list if file doesn't exist
         }
@@ -72,7 +70,7 @@ public class SavedBuildsFrame extends BaseFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             ArrayList<String> builds = readBuilds();
             builds.remove(buildToDelete);
-            try (PrintWriter writer = new PrintWriter("build.txt")) {
+            try (PrintWriter writer = new PrintWriter("SavedBuilds.txt")) {
                 for (String build : builds) {
                     writer.print(build);
                     writer.println("-----");

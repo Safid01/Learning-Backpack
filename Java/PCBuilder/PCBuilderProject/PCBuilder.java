@@ -63,26 +63,26 @@ public class PCBuilder extends BaseFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(Color.WHITE);
 
-        JButton addToCart = new JButton("Add to Cart");
+        JButton savebuild = new JButton("Save Build");
         JButton loadBuild = new JButton("Load Build");
         JButton clearAll = new JButton("Clear All");
 
-        customizeButton(addToCart);
+        customizeButton(savebuild);
         customizeButton(loadBuild);
         customizeButton(clearAll);
 
-        addToCart.setIcon(loadIcon("add_to_cart"));
-        addToCart.setBackground(new Color(0, 153, 0));
+        savebuild.setIcon(loadIcon("add_to_cart"));
+        savebuild.setBackground(new Color(0, 153, 0));
         loadBuild.setIcon(loadIcon("load_build"));
         loadBuild.setBackground(new Color(0, 102, 204));
         clearAll.setIcon(loadIcon("clear_all"));
         clearAll.setBackground(new Color(204, 0, 0));
 
-        buttonPanel.add(addToCart);
+        buttonPanel.add(savebuild);
         buttonPanel.add(loadBuild);
         buttonPanel.add(clearAll);
 
-        addToCart.addActionListener(e -> addToCart());
+        savebuild.addActionListener(e -> savebuild());
         loadBuild.addActionListener(e -> loadBuild());
         clearAll.addActionListener(e -> clearAll());
 
@@ -129,72 +129,72 @@ public class PCBuilder extends BaseFrame {
 
     private void loadComponents() {
         componentOptions.put("Processor*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Intel i9-12900K", 55000),
             new Component("AMD Ryzen 9 5950X", 50000)
         )));
         componentOptions.put("Motherboard*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("ASUS ROG Strix Z690", 25000),
             new Component("MSI MPG B550 Gaming Edge", 15000)
         )));
         componentOptions.put("CPU Cooler*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Noctua NH-D15", 8000),
             new Component("Corsair H100i", 10000)
         )));
         componentOptions.put("RAM-1*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Corsair Vengeance 16GB", 8000),
             new Component("G.Skill Ripjaws 32GB", 12000)
         )));
         componentOptions.put("RAM-2", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Corsair Vengeance 16GB", 8000),
             new Component("G.Skill Ripjaws 32GB", 12000)
         )));
         componentOptions.put("Graphics Card", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("NVIDIA RTX 3080", 70000),
             new Component("AMD Radeon RX 6800 XT", 65000)
         )));
         componentOptions.put("Storage*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Samsung 970 EVO 1TB", 15000),
             new Component("Western Digital 2TB HDD", 5000)
         )));
         componentOptions.put("Power Supply*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Corsair RM750", 10000),
             new Component("EVGA SuperNOVA 850", 12000)
         )));
         componentOptions.put("Case*", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("NZXT H510", 7000),
             new Component("Cooler Master MasterBox Q300L", 5000)
         )));
         componentOptions.put("Monitor", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Dell UltraSharp 27\"", 25000),
             new Component("ASUS TUF Gaming 24\"", 18000)
         )));
         componentOptions.put("Keyboard", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Logitech G Pro", 8000),
             new Component("Razer BlackWidow", 10000)
         )));
         componentOptions.put("Mouse", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Logitech G502", 5000),
             new Component("Razer DeathAdder", 4000)
         )));
         componentOptions.put("Cooling Fan", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("Noctua NH-D15", 8000),
             new Component("Corsair LL120", 3000)
         )));
         componentOptions.put("Cables", new ArrayList<>(Arrays.asList(
-            new Component("Select", 0),
+            new Component("Not Selected", 0),
             new Component("SATA Cable Pack", 500),
             new Component("HDMI Cable", 1000)
         )));
@@ -209,7 +209,7 @@ public class PCBuilder extends BaseFrame {
         totalLabel.setText("Total Amount: " + total + "৳");
     }
 
-    private void addToCart() {
+    private void savebuild() {
         StringBuilder build = new StringBuilder();
         boolean allRequiredSelected = true;
 
@@ -232,14 +232,17 @@ public class PCBuilder extends BaseFrame {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("SavedBuilds.txt", true))) {
             bw.write(build.toString());
             bw.newLine();
-            JOptionPane.showMessageDialog(this, "Build added to cart successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            bw.write("-----"); // Add separator line
+            bw.newLine();
+            JOptionPane.showMessageDialog(this, "Build saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE); // Updated message
+        } 
+        catch (IOException e) {
+        e.printStackTrace();
+        }  
     }
 
     private void loadBuild() {
-        new SavedBuildsFrame(this);
+        new SavedBuildsFrame();
     }
 
     private void clearAll() {
