@@ -216,7 +216,8 @@ public class PCBuilder extends BaseFrame {
         for (String key : componentComboBoxes.keySet()) {
             Component selected = (Component) componentComboBoxes.get(key).getSelectedItem();
             if (selected != null) {
-                if (key.contains("*") && selected.getName().equals("Select")) {
+                // Note: Original code checks for "Select", but options use "Not Selected"
+                if (key.contains("*") && selected.getName().equals("Not Selected")) {
                     allRequiredSelected = false;
                     break;
                 }
@@ -229,20 +230,12 @@ public class PCBuilder extends BaseFrame {
             return;
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("SavedBuilds.txt", true))) {
-            bw.write(build.toString());
-            bw.newLine();
-            bw.write("-----"); // Add separator line
-            bw.newLine();
-            JOptionPane.showMessageDialog(this, "Build saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE); // Updated message
-        } 
-        catch (IOException e) {
-        e.printStackTrace();
-        }  
+        BuildIO.saveBuild(build.toString());
+        JOptionPane.showMessageDialog(this, "Build saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void loadBuild() {
-        new SavedBuildsFrame();
+        new SavedBuildsFrame(this); // Pass the current PCBuilder instance
     }
 
     private void clearAll() {
