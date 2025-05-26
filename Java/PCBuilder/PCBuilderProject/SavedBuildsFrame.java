@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SavedBuildsFrame extends BaseFrame {
+public class SavedBuildsFrame extends JFrame {
     private PCBuilder pcBuilder;
 
     public SavedBuildsFrame(PCBuilder pcBuilder) {
@@ -21,11 +21,23 @@ public class SavedBuildsFrame extends BaseFrame {
         } else {
             for (String build : builds) {
                 JPanel buildPanel = new JPanel(new BorderLayout());
+                buildPanel.setBackground(new Color(255, 255, 255, 200)); // semi-transparent white
+                buildPanel.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(0, 120, 215), 2),
+                    BorderFactory.createEmptyBorder(8, 8, 8, 8)
+                ));
+
                 JTextArea buildText = new JTextArea(build);
                 buildText.setEditable(false);
+                buildText.setBackground(new Color(245, 245, 245));
+                buildText.setFont(new Font("Consolas", Font.PLAIN, 13));
                 buildPanel.add(buildText, BorderLayout.CENTER);
 
                 JButton loadButton = new JButton("Load");
+                loadButton.setBackground(new Color(0, 120, 215));
+                loadButton.setForeground(Color.WHITE);
+                loadButton.setFocusPainted(false);
+
                 loadButton.addActionListener(e -> {
                     if (pcBuilder != null) {
                         pcBuilder.loadBuild(build);
@@ -35,12 +47,18 @@ public class SavedBuildsFrame extends BaseFrame {
                 buildPanel.add(loadButton, BorderLayout.WEST);
 
                 JButton deleteButton = new JButton("Delete");
+                deleteButton.setBackground(new Color(220, 53, 69));
+                deleteButton.setForeground(Color.WHITE);
+                deleteButton.setFocusPainted(false);
+
                 deleteButton.addActionListener(e -> deleteBuild(build));
                 buildPanel.add(deleteButton, BorderLayout.EAST);
 
+                mainPanel.add(Box.createVerticalStrut(10)); // spacing between builds
                 mainPanel.add(buildPanel);
             }
         }
+        mainPanel.setBackground(new Color(230, 240, 255)); // light blue background
         add(new JScrollPane(mainPanel));
         setVisible(true);
     }

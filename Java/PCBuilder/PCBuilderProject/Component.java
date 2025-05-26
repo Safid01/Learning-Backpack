@@ -1,4 +1,4 @@
-public class Component {
+public abstract class Component {
     private String name;
     private double price;
 
@@ -9,6 +9,8 @@ public class Component {
 
     public String getName() { return name; }
     public double getPrice() { return price; }
+    public abstract String getCategory();
+
     @Override
     public String toString() { return name + " (" + price + "৳)"; }
 }
