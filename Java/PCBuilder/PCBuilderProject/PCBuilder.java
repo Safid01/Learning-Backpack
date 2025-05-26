@@ -126,7 +126,7 @@ public class PCBuilder extends JFrame {
             comboBox.setPreferredSize(new Dimension(350, 30));
             comboBox.setBackground(Color.WHITE);
             comboBox.setForeground(Color.BLACK);
-            comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+            comboBox.setFont(new Font("Baloo Da 2", Font.PLAIN, 12));
             componentComboBoxes.put(comp, comboBox);
 
             comboBox.addActionListener(e -> updateTotal());
