@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class SavedBuildsFrame extends JFrame {
     private PCBuilder pcBuilder;
@@ -30,7 +31,7 @@ public class SavedBuildsFrame extends JFrame {
                 JTextArea buildText = new JTextArea(build);
                 buildText.setEditable(false);
                 buildText.setBackground(new Color(245, 245, 245));
-                buildText.setFont(new Font("Consolas", Font.PLAIN, 13));
+                buildText.setFont(new Font("Baloo Da 2", Font.PLAIN, 13));
                 buildPanel.add(buildText, BorderLayout.CENTER);
 
                 JButton loadButton = new JButton("Load");

@@ -7,14 +7,12 @@ import java.io.*;
 public class PCBuilder extends JFrame {
 
     private JLabel totalLabel;
-    private Map<String, JComboBox<Component>> componentComboBoxes;
-    private Map<String, ArrayList<Component>> componentOptions;
+    private Map<String, JComboBox<Component>> componentComboBoxes = new LinkedHashMap<>();
+    private Map<String, ArrayList<Component>> componentOptions = new LinkedHashMap<>();
 
     public PCBuilder() {
         super("PC Builder");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        componentComboBoxes = new HashMap<>();
-        componentOptions = new HashMap<>();
         loadComponents();
 
         BackgroundPanel mainPanel = new BackgroundPanel("bg.jpg");
@@ -24,11 +22,11 @@ public class PCBuilder extends JFrame {
         JPanel titlePanel = new JPanel(new FlowLayout());
         titlePanel.setOpaque(false);
         JLabel title = new JLabel("Build your own PC");
-        title.setFont(new Font("Tourner Regular", Font.PLAIN, 18));
+        title.setFont(new Font("Century Gothic", Font.BOLD, 22));
         title.setForeground(Color.WHITE);
         totalLabel = new JLabel("Total Amount: 0৳");
         totalLabel.setForeground(Color.MAGENTA);
-        totalLabel.setFont(new Font("Kalpurush Regular", Font.BOLD, 16));
+        totalLabel.setFont(new Font("Baloo Da 2", Font.BOLD, 16));
         JPanel totalPanel = new JPanel();
         totalPanel.setOpaque(true);
         totalPanel.setBackground(new Color(255, 255, 255, 200));
@@ -71,6 +69,8 @@ public class PCBuilder extends JFrame {
         tabbedPane.addTab("Peripherals", peripheralsScrollPane);
         tabbedPane.addTab("Accessories", accessoriesScrollPane);
         tabbedPane.setBackground(Color.WHITE);
+        tabbedPane.setFont(new Font("Courier New", Font.BOLD, 13));
+        tabbedPane.setForeground(Color.BLACK);
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
@@ -84,7 +84,7 @@ public class PCBuilder extends JFrame {
         customizeButton(loadBuild);
         customizeButton(clearAll);
 
-        savebuild.setBackground(new Color(0, 153, 0));
+        savebuild.setBackground(new Color(0, 90, 30));
         loadBuild.setBackground(new Color(0, 102, 204));
         clearAll.setBackground(new Color(204, 0, 0));
 
@@ -116,11 +116,11 @@ public class PCBuilder extends JFrame {
             JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
             row.setOpaque(false);
 
-            String labelText = comp.replace("*", "") + ":";
+            String labelText = comp + ":";
             JLabel label = new JLabel(labelText);
             label.setPreferredSize(new Dimension(150, 30));
             label.setForeground(Color.WHITE);
-            label.setFont(new Font("Courier New", Font.PLAIN, 14));
+            label.setFont(new Font("Georgia", Font.PLAIN, 16));
 
             ArrayList<Component> options = componentOptions.get(comp);
             JComboBox<Component> comboBox = new JComboBox<>(options.toArray(new Component[0]));
