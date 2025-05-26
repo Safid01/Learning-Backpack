@@ -1,21 +1,19 @@
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 public class Main {
    public Main() {
    }
 
-   public static void main(String[] var0) {
+   public static void main(String[] args) {
       try {
          UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-      } catch (Exception var4) {
+      } catch (Exception var0) {
          try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-         } catch (Exception var3) {
-            var3.printStackTrace();
+         } catch (Exception var1) {
+            var1.printStackTrace();
          }
       }
-
-      SwingUtilities.invokeLater(PCBuilder::new);
+      new PCBuilder();
    }
 }

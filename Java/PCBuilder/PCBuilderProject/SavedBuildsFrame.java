@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class SavedBuildsFrame extends JFrame {
     private PCBuilder pcBuilder;
@@ -11,6 +10,8 @@ public class SavedBuildsFrame extends JFrame {
         this.pcBuilder = pcBuilder;
         setSize(500, 600);
         setLocationRelativeTo(null);
+        setResizable(false);
+        setIconImage(new ImageIcon("C:\\Users\\safid\\Downloads\\Learning-Backpack-1\\Java\\PCBuilder\\PCBuilderProject\\Images\\save.png").getImage()); // Set your icon path here
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ArrayList<String> builds = BuildIO.loadBuilds();
@@ -22,7 +23,7 @@ public class SavedBuildsFrame extends JFrame {
         } else {
             for (String build : builds) {
                 JPanel buildPanel = new JPanel(new BorderLayout());
-                buildPanel.setBackground(new Color(255, 255, 255, 200)); // semi-transparent white
+                buildPanel.setBackground(new Color(255, 255, 255, 200));
                 buildPanel.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(0, 120, 215), 2),
                     BorderFactory.createEmptyBorder(8, 8, 8, 8)
@@ -59,13 +60,9 @@ public class SavedBuildsFrame extends JFrame {
                 mainPanel.add(buildPanel);
             }
         }
-        mainPanel.setBackground(new Color(230, 240, 255)); // light blue background
+        mainPanel.setBackground(new Color(230, 240, 255));
         add(new JScrollPane(mainPanel));
         setVisible(true);
-    }
-
-    public SavedBuildsFrame() {
-        this(null); // Default constructor calls parameterized constructor with null
     }
 
     private void deleteBuild(String buildToDelete) {

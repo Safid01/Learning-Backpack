@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
-import java.io.*;
 
 public class PCBuilder extends JFrame {
 
@@ -101,9 +99,10 @@ public class PCBuilder extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
-        setSize(600, 700);
+        setSize(610, 800);
         setLocationRelativeTo(null);
         setResizable(false);
+        setIconImage(new ImageIcon("C:\\Users\\safid\\Downloads\\Learning-Backpack-1\\Java\\PCBuilder\\PCBuilderProject\\Images\\pc.png").getImage());
         setVisible(true);
     }
 
@@ -113,12 +112,12 @@ public class PCBuilder extends JFrame {
         grid.setOpaque(false);
 
         for (String comp : components) {
-            JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 5));
             row.setOpaque(false);
 
             String labelText = comp + ":";
             JLabel label = new JLabel(labelText);
-            label.setPreferredSize(new Dimension(150, 30));
+            label.setPreferredSize(new Dimension(120, 30));
             label.setForeground(Color.WHITE);
             label.setFont(new Font("Georgia", Font.PLAIN, 16));
 
@@ -228,7 +227,6 @@ public class PCBuilder extends JFrame {
         for (String key : componentComboBoxes.keySet()) {
             Component selected = (Component) componentComboBoxes.get(key).getSelectedItem();
             if (selected != null) {
-                // Note: Original code checks for "Select", but options use "Not Selected"
                 if (key.contains("*") && selected.getName().equals("Not Selected")) {
                     allRequiredSelected = false;
                     break;
@@ -247,7 +245,7 @@ public class PCBuilder extends JFrame {
     }
 
     private void loadBuild() {
-        new SavedBuildsFrame(this); // Pass the current PCBuilder instance
+        new SavedBuildsFrame(this);
     }
 
     private void clearAll() {
@@ -306,9 +304,5 @@ public class PCBuilder extends JFrame {
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(PCBuilder::new);
     }
 }
