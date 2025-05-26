@@ -13,7 +13,7 @@ public class PCBuilder extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loadComponents();
 
-        BackgroundPanel mainPanel = new BackgroundPanel("bg.jpg");
+        BackgroundPanel mainPanel = new BackgroundPanel("C:\\Users\\safid\\Downloads\\Learning-Backpack-1\\Java\\PCBuilder\\PCBuilderProject\\Images\\bg.jpg");
         mainPanel.setLayout(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
