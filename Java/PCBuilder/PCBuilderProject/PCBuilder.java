@@ -28,7 +28,7 @@ public class PCBuilder extends JFrame {
         JPanel totalPanel = new JPanel();
         totalPanel.setOpaque(true);
         totalPanel.setBackground(new Color(255, 255, 255, 200));
-        totalPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        totalPanel.setBorder(BorderFactory.createLineBorder(Color.MAGENTA, 3));
         totalPanel.add(totalLabel);
         titlePanel.add(title);
         titlePanel.add(totalPanel);
