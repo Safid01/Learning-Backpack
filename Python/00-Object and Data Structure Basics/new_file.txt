@@ -1,0 +1,2 @@
+This is a new file created with write mode.
+It will overwrite any existing content.
