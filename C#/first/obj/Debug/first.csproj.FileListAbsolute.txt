@@ -1,0 +1,7 @@
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\bin\Debug\first.exe.config
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\bin\Debug\first.exe
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\bin\Debug\first.pdb
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\obj\Debug\first.csproj.AssemblyReference.cache
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\obj\Debug\first.csproj.CoreCompileInputs.cache
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\obj\Debug\first.exe
+C:\Users\suffi\Downloads\Learning-Backpack\C#\first\obj\Debug\first.pdb
