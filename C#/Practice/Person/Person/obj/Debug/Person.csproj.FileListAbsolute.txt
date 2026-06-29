@@ -1,0 +1,7 @@
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\obj\Debug\Person.csproj.AssemblyReference.cache
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\obj\Debug\Person.csproj.CoreCompileInputs.cache
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\bin\Debug\Person.exe.config
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\bin\Debug\Person.exe
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\bin\Debug\Person.pdb
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\obj\Debug\Person.exe
+C:\Users\suffi\Downloads\Learning-Backpack\C#\Practice\Person\Person\obj\Debug\Person.pdb
