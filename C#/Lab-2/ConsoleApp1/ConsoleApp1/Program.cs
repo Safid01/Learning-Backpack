@@ -29,8 +29,8 @@ namespace ConsoleApp1
              jg[0] = new int[] { 1, 2, 3, 4 };
              jg[1] = new int[] { 2, 3, 4 };
              jg[2] = new int[] { 3 };
-             jg[3] = new int[] { 4, 7, 2, 5 };
-             for (int i = 0; i < jg.Length; i++)
+             jg[3] = new int[] { 4, 7, 2, 5, 6, 7 };
+            for (int i = 0; i < jg.Length; i++)
              {
                  for (int j = 0; j < jg[i].Length; j++)
                  {

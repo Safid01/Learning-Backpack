@@ -18,9 +18,10 @@ namespace ConsoleApp1
             //parameterized constructor
             Person p2 = new Person(2, "Karim", 300);
             p2.printDetails();
-           /* Manager m1 = new Manager(2, "asad", 400, 5);
+
+            Manager m1 = new Manager(2, "asad", 400, 5);
             m1.printDetails();
-            m1.printDetailsp(); */
+            m1.printDetailsp(); 
 
             Person[] Person1 = new Person[2];
            // Person1[0] = p1;
@@ -34,10 +35,14 @@ namespace ConsoleApp1
                 Console.WriteLine("Enter your Name: ");
                 Person1[i].setName(Console.ReadLine()); } 
             for (int i = 0; i < Person1.Length; i++)
-            {Console.WriteLine("--------------------------");
+            {
+                /* Console.WriteLine("--------------------------");
                 Console.WriteLine("Inserted Id: " + Person1[i].getId());
                 Console.WriteLine("Inserted name: " + Person1[i].getName());
-                Console.WriteLine("Inserted salary: " + Person1[i].getSalary());
+                Console.WriteLine("Inserted salary: " + Person1[i].getSalary()); */
+
+                Person1[i].printDetails();
+                Person1[i].printDetailsp();
             }
 
 

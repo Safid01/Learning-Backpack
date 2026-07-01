@@ -10,7 +10,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-           /* Console.WriteLine("ASDf");
+            /* Console.WriteLine("ASDf");
             Console.WriteLine("ASDf");
 
             int a = 9;
@@ -76,17 +76,16 @@ namespace ConsoleApp1
             } while (i < 15);  */
 
             string[] students = new string[5];
-            int i;
             Console.WriteLine("Enter students:");
-            for (i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 students[i] = Console.ReadLine();
             }
-            for (i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("students- [" + i + "]: " + students[i]);
             }
-            for (i = 0; i < students.Length; i++)
+            for (int i = 0; i < students.Length; i++)
             {
                 Console.WriteLine("students- [" + i + "]: " + students[i]);
             }
@@ -99,25 +98,12 @@ namespace ConsoleApp1
                 Console.WriteLine("foreach: " + s);
             }
 
-
             var a = 2;
             var b = 3.3;
             var c = "Hll";
             Console.WriteLine("int: " + a);
             Console.WriteLine("double: " + b);
-            Console.WriteLine("string: " + c);
-
-
-
-
-
-
-
-
-
-
-
-
+            Console.WriteLine("string: " + c);  
 
             Console.ReadKey();
         }
